@@ -1,5 +1,12 @@
 from django.urls import path
-from wishlist.views import show_wishlist, show_xml, show_json, register, login_user, logout_user
+from wishlist.views import (
+    show_wishlist,
+    show_xml,
+    show_json,
+    register,
+    login_user,
+    logout_user,
+)
 
 app_name = "wishlist"
 
@@ -8,6 +15,6 @@ urlpatterns = [
     path("xml/", show_xml, name="show_xml"),
     path("json/", show_json, name="show_json"),
     path("register/", register, name="register"),
-    path('login/', login_user, name='login'),
-    path('logout/', logout_user, name='logout'),
+    path("login/", login_user, name="login"),
+    path("logout/", logout_user, name="logout"),
 ]
