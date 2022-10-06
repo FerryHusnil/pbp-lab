@@ -1,0 +1,71 @@
+{% extends 'base.html' %} 
+
+{% block meta %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+      $("#get-data").click(function(){
+        $.get(window.location.href.replace("ajax", "json"), function(data) {
+          $("#wishlist-data").empty();
+          data.forEach(function(item) {
+            $("#wishlist-data").append(
+              `<tr>
+                <td>${item.fields.nama_barang}</td>
+                <td>${item.fields.harga_barang}</td>
+                <td>${item.fields.deskripsi}</td>
+              </tr>`
+            );
+          });
+        });
+      });
+    });
+
+    function postAjax() {
+      $("form#wishlist-form").submit(function (e) {
+            e.preventDefault();
+            var actionURL = event.currentTarget.action;
+            var formData = $("form#wishlist-form").serialize();
+            console.log(formData);
+            $.ajax({
+                url: actionURL,
+                type: "POST",
+                data: formData,
+                success: (data) => {
+                    alert("success!");
+                },
+                error: (error) => {
+                    console.log(error);
+                    alert("Error!");
+                }
+            });
+        });
+    }
+
+    </script>
+{% endblock meta %}
+
+{% block content %}
+
+<table>
+  <thead>
+    <tr>
+      <th>Nama Barang</th>
+      <th>Harga Barang</th>
+      <th>Deskripsi</th>
+    </tr>
+  </thead>
+  <tbody id="wishlist-data">
+  </tbody>
+</table>
+
+<button id="get-data">Get data</button>
+
+<form method="POST" action="{% url 'wishlist:add_wishlist_ajax' %}" id="wishlist-form">
+  {% csrf_token %}
+  <input type="text" name="nama_barang" placeholder="Nama Barang" />
+  <input type="number" name="harga_barang" placeholder="Harga Barang" />
+  <input type="text" name="deskripsi" placeholder="Deskripsi" />
+  <input type="submit" value="Tambah" />
+</form>
+
+{% endblock content %}

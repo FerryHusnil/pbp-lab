@@ -6,6 +6,8 @@ from wishlist.views import (
     register,
     login_user,
     logout_user,
+    show_wishlist_ajax,
+    add_wishlist_ajax
 )
 
 app_name = "wishlist"
@@ -17,4 +19,6 @@ urlpatterns = [
     path("register/", register, name="register"),
     path("login/", login_user, name="login"),
     path("logout/", logout_user, name="logout"),
+    path("ajax/", show_wishlist_ajax, name="show_wishlist_ajax"),
+    path("ajax/post/", add_wishlist_ajax, name="add_wishlist_ajax")
 ]
